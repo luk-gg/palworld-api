@@ -20,5 +20,4 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# 4k images blocking pushing to github
-/game/client/*
+/game/*/*
