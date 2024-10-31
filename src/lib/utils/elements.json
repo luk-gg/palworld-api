@@ -1,0 +1,56 @@
+[
+    {
+        "name": "Neutral",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_00.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_00.png",
+        "idString": "Normal"
+    },
+    {
+        "name": "Fire",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_01.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_01.png",
+        "idString": "Fire"
+    },
+    {
+        "name": "Water",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_02.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_02.png",
+        "idString": "Water"
+    },
+    {
+        "name": "Electricity",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_03.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_03.png",
+        "idString": "Electricity"
+    },
+    {
+        "name": "Grass",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_04.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_04.png",
+        "idString": "Leaf"
+    },
+    {
+        "name": "Dark",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_05.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_05.png",
+        "idString": "Dark"
+    },
+    {
+        "name": "Dragon",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_06.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_06.png",
+        "idString": "Dragon"
+    },
+    {
+        "name": "Earth",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_07.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_07.png",
+        "idString": "Earth"
+    },
+    {
+        "name": "Ice",
+        "icon": "/Pal/Texture/UI/InGame/T_Icon_element_s_08.png",
+        "iconLarge": "/Pal/Texture/UI/Main_Menu/T_Icon_element_08.png",
+        "idString": "Ice"
+    }
+]

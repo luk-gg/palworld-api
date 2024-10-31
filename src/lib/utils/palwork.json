@@ -1,0 +1,67 @@
+[
+    {
+        "name": "Kindling",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_00.png",
+        "id": "EmitFlame"
+    },
+    {
+        "name": "Watering",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_01.png",
+        "id": "Watering"
+    },
+    {
+        "name": "Planting",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_02.png",
+        "id": "Seeding"
+    },
+    {
+        "name": "Generating Electricity",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_03.png",
+        "id": "GenerateElectricity"
+    },
+    {
+        "name": "Handiwork",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_04.png",
+        "id": "Handcraft"
+    },
+    {
+        "name": "Gathering",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_05.png",
+        "id": "Collection"
+    },
+    {
+        "name": "Lumbering",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_06.png",
+        "id": "Deforest"
+    },
+    {
+        "name": "Mining",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_07.png",
+        "id": "Mining"
+    },
+    {
+        "name": "Oil Extraction",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_09.png",
+        "id": "OilExtraction"
+    },
+    {
+        "name": "Medicine Production",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_08.png",
+        "id": "ProductMedicine"
+    },
+    {
+        "name": "Cooling",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_10.png",
+        "id": "Cool"
+    },
+    {
+        "name": "Transporting",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_11.png",
+        "id": "Transport"
+    },
+    {
+        "name": "Grazing",
+        "icon": "/Pal/Texture/UI/InGame/T_icon_palwork_12.png",
+        "id": "MonsterFarm"
+    }
+]

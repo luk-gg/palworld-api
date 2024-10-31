@@ -1,0 +1,1 @@
+API for pal.cafe (discontinued) with slight modifications. Output not tested. Requires supplying game data in `/game/client`.
