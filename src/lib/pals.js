@@ -4,13 +4,13 @@ import DT_PalUniqueBreeding from "../../game/client/Content/Pal/DataTable/Charac
 import DT_PalDropItem from "../../game/client/Content/Pal/DataTable/Character/DT_PalDropItem.json"
 import DT_ActiveSkills from "../../game/client/Content/Pal/DataTable/Waza/DT_WazaDataTable.json"
 import DT_PalActiveSkillMappings from "../../game/client/Content/Pal/DataTable/Waza/DT_WazaMasterLevel.json"
-import L10N_PalNames from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_PalNameText.json"
-import L10N_PartnerSkillDescs from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_PalFirstActivatedInfoText.json"
-import L10N_PartnerSkillNames from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_SkillNameText.json"
-import L10N_ItemNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_ItemNameText.json"
-import L10N_SkillNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_SkillNameText.json"
+import DT_PalNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_PalNameText.json"
+import DT_PalFirstActivatedInfoText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_PalFirstActivatedInfoText.json"
+import DT_SkillNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_SkillNameText.json"
+import DT_ItemNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_ItemNameText.json"
+import DT_SkillNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_SkillNameText.json"
 import DA_StaticItemDataAsset from "../../game/client/Content/Pal/DataAsset/Item/DA_StaticItemDataAsset.json"
-import { replaceTags } from "./utils"
+import { imgPath, replaceTags, sp } from "./utils"
 
 function getIsRideable(palIndex) {
     // Possible files for determining if pal is rideable
@@ -110,8 +110,10 @@ function getIsRideable(palIndex) {
     return result
 }
 
+
+
 function getPartnerSkillDesc(palIdString) {
-    return L10N_PartnerSkillDescs[0]
+    return DT_PalFirstActivatedInfoText[0]
         .Rows[`PAL_FIRST_SPAWN_DESC_${palIdString}`]?.TextData.LocalizedString
         .replace("\r\n", " ")
         .replace(/<([^>\s]+)\s+id=\|([^|]+)\|\/>/g, (match, tagName, tagContent) => {
@@ -119,20 +121,17 @@ function getPartnerSkillDesc(palIdString) {
         })
 }
 
-function getPartnerSkillName(palIdString) {
-    return L10N_PartnerSkillNames[0].Rows[`PARTNERSKILL_${palIdString}`]?.TextData.LocalizedString
-}
 
 function getDropTables(palIdString) {
     return Object.values(DT_PalDropItem[0].Rows)
         .filter(dropTable => dropTable.CharacterID === palIdString)
         .map(dropTable => {
-            [1,2,3,4,5].forEach(itemNumber => {
+            [1, 2, 3, 4, 5].forEach(itemNumber => {
                 let itemName = "NO TEXT"
                 let icon = ""
                 const itemId = dropTable[`ItemId${itemNumber}`]
                 if (itemId && itemId !== "None") {
-                    itemName = L10N_ItemNameText[0].Rows[`ITEM_NAME_${itemId}`].TextData.LocalizedString
+                    itemName = DT_ItemNameText[0].Rows[`ITEM_NAME_${itemId}`].TextData.LocalizedString
                     const iconObject = DA_StaticItemDataAsset.find(obj => obj.Properties.ID === itemId)
                     icon = iconObject.Properties.IconTexture.AssetPathName.replace("/Game", "").split(".")[0] + ".png"
                 }
@@ -150,7 +149,7 @@ function getActiveSkills(palIdString) {
         .map(skillUnlockObj => {
             const skillData = Object.values(DT_ActiveSkills[0].Rows).find(obj => obj.WazaType === skillUnlockObj.WazaID)
             const skillId = skillUnlockObj.WazaID.split("::").pop()
-            const name = L10N_SkillNameText[0].Rows[`ACTION_SKILL_${skillId}`]?.TextData.LocalizedString ?? "Blah blah"
+            const name = DT_SkillNameText[0].Rows[`ACTION_SKILL_${skillId}`]?.TextData.LocalizedString ?? "Blah blah"
             return {
                 ...skillUnlockObj,
                 ...skillData,
@@ -160,46 +159,83 @@ function getActiveSkills(palIdString) {
         })
 }
 
-// Because devs are doing typos here and there, WindChimes cannot get the image because Windchimes is the key
-const PalIcons = Object.entries(DT_PalIcons[0].Rows).reduce((acc, [key, value]) => {
-    acc[key.toLowerCase()] = value.Icon.AssetPathName.replace("/Game", "").split(".")[0] + ".png"
-    return acc
-}, {})
-PalIcons.none = "/Pal/Texture/PalIcon/Normal/T_dummy_icon.png"
-PalIcons.plantslime_flower = "/Pal/Texture/PalIcon/Normal/T_PlantSlime_icon_normal.png" // temp fix, missing icon
+// No capitalization issue, but PlantSlime_Flower doesn't exist,
+const partnerSkillNamesLowercase =
+    Object.entries(DT_SkillNameText[0].Rows)
+        .filter(([key]) => key.startsWith("PARTNERSKILL_"))
+        .reduce((acc, [key, value]) => {
+            acc[key.toLowerCase()] = value.TextData.LocalizedString
+            return acc
+        }, {})
+
+// WindChimes/Windchimes, BadCatGirl/BadCatgirl etc. capitalization causes issues
+const palIconsLowercase =
+    Object.entries(DT_PalIcons[0].Rows)
+        .reduce((acc, [idString, value]) => {
+            acc[idString.toLowerCase()] = imgPath(value.Icon.AssetPathName)
+            return acc
+        }, {})
+palIconsLowercase.none = imgPath("/Game/Pal/Texture/PalIcon/Normal/T_dummy_icon.png")
+palIconsLowercase.plantslime_flower = palIconsLowercase.plantslime
+
+// WindChimes/Windchimes capitalization causes issues
+const palNamesLowercase =
+    Object.entries(DT_PalNameText[0].Rows)
+        .reduce((acc, [key, value]) => {
+            acc[key.toLowerCase()] = value.TextData.LocalizedString
+            return acc
+        }, {})
 
 const pals = Object.entries(DT_PalStats[0].Rows)
-    .filter(([key, value]) => value.ZukanIndex > 0) // && !["boss_", "gym_"].some(prefix => key.toLowerCase().includes(prefix))
-    .map(([key, value]) => {
-        const palIndex = value.ZukanIndex + value.ZukanIndexSuffix
-        const nameKey = value.OverrideNameTextID !== "None" ? value.OverrideNameTextID : `PAL_NAME_${key}`
-        const nameLocalized = L10N_PalNames[0].Rows[nameKey]?.TextData.LocalizedString
-        // const name = nameLocalized.toLowerCase().includes("_text") ? key : nameLocalized // the name might be "en_text" "zh_Hans_Text" etc. for unfilled values
-        const name = nameLocalized
-        const icon = PalIcons[value.BPClass.toLowerCase()]
+    // Filter out enemy pals including those prefixed with BOSS_, GYM_, PREDATOR_, and RAID_
+    .filter(([idString, pal]) =>
+        pal.ZukanIndex > 0
+        && !idString.endsWith("_Oilrig")
+        && !["boss_", "gym_", "raid_", "predator_", "summon_"].some(prefix => idString.toLowerCase().startsWith(prefix))
+    )
+    .map(([idString, pal]) => {
+        const id = pal.ZukanIndex + pal.ZukanIndexSuffix
 
-        const isRideable = getIsRideable(palIndex)
-        const partnerSkillDesc = getPartnerSkillDesc(key)
-        const partnerSkillName = getPartnerSkillName(key)
-        const dropTables = getDropTables(key)
-        const activeSkills = getActiveSkills(key)
+        let name = palNamesLowercase[`PAL_NAME_${idString}`.toLowerCase()]
+        if (pal.OverrideNameTextID !== "None") {
+            name = palNamesLowercase[pal.OverrideNameTextID.toLowerCase()]
+        }
+
+        let partnerSkillName = partnerSkillNamesLowercase[`PARTNERSKILL_${idString}`.toLowerCase()]
+        if (pal.OverridePartnerSkillTextID !== "None") {
+            partnerSkillName = partnerSkillNamesLowercase[pal.OverridePartnerSkillTextID.toLowerCase()]
+        }
+
+        const icon = palIconsLowercase[idString.toLowerCase()]
+        const elements = [sp(pal.ElementType1), sp(pal.ElementType2)].filter(ele => ele !== "None")
+
+
+        // const isRideable = getIsRideable(palIndex)
+        // const partnerSkillDesc = getPartnerSkillDesc(key)
+        // const partnerSkillName = getPartnerSkillName(key)
+        // const dropTables = getDropTables(key)
+        // const activeSkills = getActiveSkills(key)
 
         return {
-            key,
-            text: {
-                name: name ?? "NO TEXT",
-                partnerSkillName,
-                partnerSkillDesc
-            },
-            assets: {
-                icon
-            },
-            dropTables,
-            activeSkills,
-            ...isRideable,
-            ...value,
+            id,
+            idString,
+            name,
+            icon,
+            elements,
+            partnerSkill: {
+                name: partnerSkillName
+            }
+            // text: {
+            //     partnerSkillName,
+            //     partnerSkillDesc
+            // },
+            // dropTables,
+            // activeSkills,
+            // ...isRideable,
+            // ...value,
         }
     })
+    .sort((a, b) => parseInt(a.id) - parseInt(b.id))
 
 // Some pals can only be bred with certain parents.
 const DT_uniqueBreeding = Object.values(DT_PalUniqueBreeding[0].Rows)
@@ -276,8 +312,5 @@ export function getChild(parent1, parent2) {
 
 // console.log(getChild(pals.find(pal => pal.text.name === "Relaxaurus"), pals.find(pal => pal.text.name === "Sparkit")))
 
-export const entries_brief = pals.map((pal) => {
-    
-})
 
 export default pals
