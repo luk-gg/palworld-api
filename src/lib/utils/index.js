@@ -56,8 +56,8 @@ export function getBriefArr(arr) {
 }
 
 export function getBriefData(fullData) {
-    const { id, name, icon } = fullData || {}
-    return { id, name, icon }
+    const { id, name, type, subtypes, elements, icon, role, charId, gender, rarity, category, weak_attribute_damage_up, all_attribute_damage_resist } = fullData || {}
+    return { id, name, type, subtypes, elements, icon, role, charId, gender, rarity, category, elePower: weak_attribute_damage_up || all_attribute_damage_resist || undefined }
 }
 
 // Ensure case-insensitivity as svelte's routing (or the browser?) transforms links like /Characters/UCR001 to /characters/ucr001. 
@@ -66,4 +66,19 @@ export function writeJson(dir, fileName, data) {
         fs.mkdirSync(dir, { recursive: true });
     }
     fs.writeFileSync(`${dir}/${fileName.toLowerCase()}.json`, JSON.stringify(data))
+}
+
+// Split-pop function for removing Unreal Engine variable types, i.e. "ESkillType::Attack" → "Attack".
+export const sp = (str, delimiter = "::") => str.split(delimiter).pop()
+
+export function sortAlphabetically(data, key = null) {
+    return data.sort(function (a, b) {
+        if (key) {
+            if (a[key] < b[key]) return -1;
+            if (a[key] > b[key]) return 1;
+        }
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    });
 }

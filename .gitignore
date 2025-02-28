@@ -20,4 +20,19 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-/game/*/*
+# Ignore game files except for UI
+/game/*/**
+!/game/client/Content
+!/game/client/Content/Pal
+!/game/client/Content/Pal/Texture
+!/game/client/Content/Pal/Texture/**
+
+# Ignore large 4K res images
+/game/client/Content/Pal/Texture/Note
+/game/client/Content/Pal/Texture/HelpGuide
+
+# Useless texture files
+/game/client/Content/Pal/Texture/MapObject
+/game/client/Content/Pal/Texture/MaskTextures
+/game/client/Content/Pal/Texture/ModelCommon
+/game/client/Content/Pal/Texture/Stage

@@ -150,7 +150,7 @@ function getActiveSkills(palIdString) {
         .map(skillUnlockObj => {
             const skillData = Object.values(DT_ActiveSkills[0].Rows).find(obj => obj.WazaType === skillUnlockObj.WazaID)
             const skillId = skillUnlockObj.WazaID.split("::").pop()
-            const name = L10N_SkillNameText[0].Rows[`ACTION_SKILL_${skillId}`].TextData.LocalizedString
+            const name = L10N_SkillNameText[0].Rows[`ACTION_SKILL_${skillId}`]?.TextData.LocalizedString ?? "Blah blah"
             return {
                 ...skillUnlockObj,
                 ...skillData,
@@ -275,5 +275,9 @@ export function getChild(parent1, parent2) {
 }
 
 // console.log(getChild(pals.find(pal => pal.text.name === "Relaxaurus"), pals.find(pal => pal.text.name === "Sparkit")))
+
+export const entries_brief = pals.map((pal) => {
+    
+})
 
 export default pals
