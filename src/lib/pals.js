@@ -10,7 +10,7 @@ import DT_SkillNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Te
 import DT_ItemNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_ItemNameText.json"
 import DT_SkillNameText from "../../game/client/Content/L10N/en/Pal/DataTable/Text/DT_SkillNameText.json"
 import DA_StaticItemDataAsset from "../../game/client/Content/Pal/DataAsset/Item/DA_StaticItemDataAsset.json"
-import { imgPath, replaceTags, sp } from "./utils"
+import { imgPath, replaceTags, sp } from "/utils"
 
 function getIsRideable(palIndex) {
     // Possible files for determining if pal is rideable
